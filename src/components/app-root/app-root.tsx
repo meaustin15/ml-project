@@ -1,8 +1,8 @@
 import { Component, h, State } from '@stencil/core';
 import { AuthService } from '../../services/Auth';
+import { DatabaseService} from '../../services/Database';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+
 
 @Component({
   tag: 'app-root',
@@ -12,9 +12,9 @@ import 'firebase/firestore';
 export class AppRoot {
 @State()
   defaultProps:{
-    auth: AuthService
-    db?: any,
-    session?: any
+    auth: AuthService;
+    db?: any;
+    session?: any;
   } = {
     auth: new AuthService({
       firebase: {
@@ -29,6 +29,7 @@ export class AppRoot {
   };
 
   componentDidLoad() {
+    console.log(this.defaultProps);
     this.defaultProps.db = new DatabaseService();
     this.defaultProps.auth.onAuthChanged(session => {
       console.log(session);
@@ -43,8 +44,8 @@ export class AppRoot {
     return (
       <ion-app>
         <ion-router useHash={false}>
-          <ion-route url="/" component="app-home" componentProps={{...this.defaultProps}}/>
-          <ion-route url="/profile/:name" component="app-profile" componentProps={{...this.defaultProps}}  />
+          <ion-route url="/" component="app-home" componentProps={this.defaultProps}/>
+          <ion-route url="/profile/:name" component="app-profile" componentProps={this.defaultProps}  />
         </ion-router>
         <ion-nav />
       </ion-app>

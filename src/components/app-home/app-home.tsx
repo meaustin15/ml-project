@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { AuthService } from '../../services/Auth';
-
+import { DatabaseService} from '../../services/Database';
 
 @Component({
   tag: 'app-home',
@@ -9,22 +9,24 @@ import { AuthService } from '../../services/Auth';
 
 export class AppHome {
 
-@Prop() db: any;
+@Prop() db: DatabaseService;
 @Prop() auth: AuthService;
 @Prop() session: any;
-
-
 
 async loginWithGithub(_event) {
   try {
     const result = await this.auth.withSocial('github');
-   /* const docRef = this.user.update(result.user.uid, {
-     email: result.user.email,
-     oldUser: true
-    });*/
-     console.log(result);
+  
+    await this.db.add("users", { name: result.user.displayName }, result.user.uid);
+    // const docRef = this.user.update(result.user.uid, {
+    //  email: result.user.email,
+    //  oldUser: true
+    // });
+    // console.log(docRef);
+    console.log(result);
   } catch (error) {
     alert('There was an error logging in...');
+    console.log(error);
   }
     //const provider = new firebase.auth.GithubAuthProvider();
     //const result = await firebase.auth().signInWithPopup(provider);
@@ -42,7 +44,7 @@ async loginWithGithub(_event) {
       </ion-header>,
     <ion-content class="ion-padding">
     
-        <ion-button onClick={(_event) => this.loginWithGithub.bind(event)} expand="block">Login with Github</ion-button>
+        <ion-button onClick={(event) => this.loginWithGithub(event)} expand="block">Login with Github</ion-button>
       </ion-content>
     ];
   }

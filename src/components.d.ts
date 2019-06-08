@@ -7,6 +7,9 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
+  DatabaseService,
+} from './services/Database';
+import {
   AuthService,
 } from './services/Auth';
 
@@ -14,7 +17,7 @@ import {
 export namespace Components {
   interface AppHome {
     'auth': AuthService;
-    'db': any;
+    'db': DatabaseService;
     'session': any;
   }
   interface AppProfile {
@@ -53,7 +56,7 @@ declare global {
 declare namespace LocalJSX {
   interface AppHome extends JSXBase.HTMLAttributes<HTMLAppHomeElement> {
     'auth'?: AuthService;
-    'db'?: any;
+    'db'?: DatabaseService;
     'session'?: any;
   }
   interface AppProfile extends JSXBase.HTMLAttributes<HTMLAppProfileElement> {
