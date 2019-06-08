@@ -9,14 +9,18 @@
     ],
     "scripts": {
         "build": "stencil build",
-        "start": "stencil build --dev --watch --serve",
+        "build:test": "npm run env --test && npm run build",
+        "env": "node tasks/env.js",
+        "start": "npm run env -- local && stencil build --dev --watch --serve",
         "test": "stencil test --spec --e2e",
         "test.watch": "stencil test --spec --e2e --watch"
     },
     "dependencies": {
-        "@ionic/core": "one"
+        "@ionic/core": "one",
+        "firebase": "^6.1.1"
     },
     "devDependencies": {
-        "@stencil/core": "1.0.0-beta.8"
+        "@stencil/core": "1.0.0-beta.8",
+        "fs-extra": "^8.0.1"
     }
 }

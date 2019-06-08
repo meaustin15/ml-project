@@ -1,10 +1,37 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { AuthService } from '../../services/Auth';
+
 
 @Component({
   tag: 'app-home',
   styleUrl: 'app-home.css'
 })
+
 export class AppHome {
+
+@Prop() db: any;
+@Prop() auth: AuthService;
+@Prop() session: any;
+
+
+
+async loginWithGithub(_event) {
+  try {
+    const result = await this.auth.withSocial('github');
+   /* const docRef = this.user.update(result.user.uid, {
+     email: result.user.email,
+     oldUser: true
+    });*/
+     console.log(result);
+  } catch (error) {
+    alert('There was an error logging in...');
+  }
+    //const provider = new firebase.auth.GithubAuthProvider();
+    //const result = await firebase.auth().signInWithPopup(provider);
+    //console.log(result);
+  
+
+  }
 
   render() {
     return [
@@ -13,16 +40,9 @@ export class AppHome {
           <ion-title>Home</ion-title>
         </ion-toolbar>
       </ion-header>,
-
-      <ion-content class="ion-padding">
-        <p>
-          Welcome to the PWA Toolkit. You can use this starter to build entire
-          apps with web components using Stencil and ionic/core! Check out the
-          README for everything that comes in this starter out of the box and
-          check out our docs on <a href="https://stenciljs.com">stenciljs.com</a> to get started.
-        </p>
-
-        <ion-button href="/profile/ionic" expand="block">Profile page</ion-button>
+    <ion-content class="ion-padding">
+    
+        <ion-button onClick={(_event) => this.loginWithGithub.bind(event)} expand="block">Login with Github</ion-button>
       </ion-content>
     ];
   }
