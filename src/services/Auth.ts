@@ -257,7 +257,7 @@ export class AuthService {
 //     );
 //   }
 
-  withSocial(network: string, redirect = false): Promise<any> {
+  withSocial(network: string, redirect = false): Promise<{user: firebase.User, credential: any}> {
     let provider;
     let shouldRedirect = redirect;
     if (window.matchMedia('(display-mode: standalone)').matches) {
